@@ -39,7 +39,7 @@ Multiple versions of php can be selected from tags in Docker Hub.
 - `bundler`  
 - `memcached`  
 - `redis`  
-- `git` - build from source. (Latest version)
+- `git`
 
 ### Environmental Variable (From polinux/httpd image)
 

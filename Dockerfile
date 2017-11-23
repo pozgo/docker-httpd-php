@@ -18,6 +18,7 @@ RUN \
     unzip \
     make \
     openssh-clients \
+    git \
     MariaDB-client && \
   rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-7.rpm && \
   yum install -y \
@@ -44,6 +45,9 @@ RUN \
     php${PHP_VERSION}-php-pecl-mysql \
     php${PHP_VERSION}-php-pecl-uploadprogress \
     php${PHP_VERSION}-php-pecl-uuid \
+    php${PHP_VERSION}-php-pecl-memcache \
+    php${PHP_VERSION}-php-pecl-memcached \
+    php${PHP_VERSION}-php-pecl-redis \
     php${PHP_VERSION}-php-pecl-zip && \
   ln -sfF /opt/remi/php${PHP_VERSION}/enable /etc/profile.d/php${PHP_VERSION}-paths.sh && \
   ln -sfF /opt/remi/php${PHP_VERSION}/root/usr/bin/{pear,pecl,phar,php,php-cgi,php-config,phpize} /usr/local/bin/. && \
@@ -61,26 +65,6 @@ RUN \
   echo 'gem: --no-document' > /etc/gemrc && \
   gem update --system && \
   gem install bundler && \
-  yum list installed | cut -f 1 -d " " | uniq | sort > /tmp/yum-pre && \
-  yum install -y \
-    automake \
-    autoconf \
-    libtool \
-    openssl-devel \
-    curl-devel \
-    expat-devel \
-    gettext-devel \
-    perl-ExtUtils-MakeMaker \
-    httpd-devel && \
-  cd /tmp && \
-  wget https://www.kernel.org/pub/software/scm/git/git-$GIT_VERSION.tar.gz && \
-  tar -zxf git-$GIT_VERSION.tar.gz --no-same-owner && \
-  cd git-$GIT_VERSION && \
-  make prefix=/usr/local all && \
-  make prefix=/usr/local install && \
-  cd /tmp && rm -rf /tmp/git* && \
-  yum list installed | cut -f 1 -d " " | uniq | sort > /tmp/yum-post && \
-  diff /tmp/yum-pre /tmp/yum-post | grep "^>" | cut -f 2 -d ' ' | xargs yum erase -y && \
   export PROFILE=/etc/profile.d/nvm.sh && touch $PROFILE && \
   curl -sSL https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash && \
   source $NVM_DIR/nvm.sh && \
@@ -93,13 +77,6 @@ RUN \
     bower \
     browser-sync && \
   echo -e "StrictHostKeyChecking no" >> /etc/ssh/ssh_config && \
-  yum install -y libmemcached-devel && \
-  git clone https://github.com/php-memcached-dev/php-memcached.git && cd php-memcached && git checkout php7 && \
-  phpize && ./configure && make && make install && \
-  echo "extension=memcached.so" > /etc/php.d/50-memcached.ini && \
-  git clone https://github.com/phpredis/phpredis.git && cd phpredis && git checkout master && \
-  phpize && ./configure && make && make install && \
-  echo "extension=redis.so" > /etc/php.d/50-redis.ini && \
   curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
   chown apache /usr/local/bin/composer && composer --version && \
   yum clean all && rm -rf /tmp/yum* && \
