@@ -4,7 +4,7 @@ ENV \
     NVM_DIR="/usr/local/nvm" \
     NODE_VERSION="9.2.0" \
     GIT_VERSION="2.15.0" \
-    PHP_VERSION="71"
+    PHP_VERSION="70"
 
 ADD mariadb.repo /etc/yum.repos.d/mariadb.repo
 
