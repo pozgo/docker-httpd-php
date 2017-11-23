@@ -1,4 +1,4 @@
-# Apache winth PHP in a Docker with Supervisor (CentOS 7)
+# Apache winth PHP-FPM in a Docker with Supervisor (CentOS 7)
 
 [![Build Status](https://travis-ci.org/pozgo/docker-httpd-php.svg)](https://travis-ci.org/pozgo/docker-httpd-php)  
 [![GitHub Open Issues](https://img.shields.io/github/issues/pozgo/docker-httpd-php.svg)](https://github.com/pozgo/docker-httpd-php/issues)  
@@ -13,13 +13,31 @@
 Felling like supporting me in my projects use donate button. Thank You!  
 [![](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://www.paypal.me/POzgo)
 
+This is [Docker Image](https://registry.hub.docker.com/u/polinux/httpd-php/) with Apache + PHP-FPM combo using [polinux/supervisor](https://hub.docker.com/r/polinux/supervisor) docker image as base.
 
-[Docker Image](https://registry.hub.docker.com/u/polinux/httpd-php/) with Apache server and PHP with PHP-FPM using [polinux/supervisor](https://hub.docker.com/r/polinux/supervisor) docker image as base.
+For different PHP versions, look up different branches of this repository.
+On Docker Hub you can find them under different tags:
+
+|PHP Version|Image Name| Branch |Status|
+|:-:|:--|:--|:-:|
+|7.2|`polinux/httpd-php:php72`|php-7.2|[![Build Status](https://travis-ci.org/pozgo/docker-httpd-php.svg?branch=php-7.2)](https://travis-ci.org/pozgo/docker-httpd-php)|
+|7.1|`polinux/httpd-php:php71`|php-7.1|[![Build Status](https://travis-ci.org/pozgo/docker-httpd-php.svg?branch=php-7.1)](https://travis-ci.org/pozgo/docker-httpd-php)|
+|7.0|`polinux/httpd-php:php70`|php-7.0|[![Build Status](https://travis-ci.org/pozgo/docker-httpd-php.svg?branch=php-7.0)](https://travis-ci.org/pozgo/docker-httpd-php)|
+|5.6|`polinux/httpd-php:php56`|php-5.6|[![Build Status](https://travis-ci.org/pozgo/docker-httpd-php.svg?branch=php-5.6)](https://travis-ci.org/pozgo/docker-httpd-php)|
+
+**This image have `inotify` installed and set to gracefuly reload when Apache config changes, including VHosts.**
 
 Default web directory is set to `/var/www/html/`.
 `info.php` is present in this image. just got to `http://localhost/info.php`
 
 Multiple versions of php can be selected from tags in Docker Hub. 
+
+
+### Common dev tools for web app development
+
+- Ruby 2.0, Bundler
+- NodeJS and NPM
+- NPM packages like `gulp`, `grunt`, `bower`, `browser-sync`
 
 ### Packages installed (PHP mods)
 
