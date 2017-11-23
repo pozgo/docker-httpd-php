@@ -10,6 +10,6 @@ script:
   - docker build -t polinux/httpd-php:travis .
 # Start httpd-php
   - docker run -d -p 8000:80 --name httpd-php polinux/httpd-php:travis
-  - while true; do if docker logs httpd-php | grep "httpd-php entered RUNNING state"; then break; else sleep 1; fi done
+  - while true; do if docker logs httpd-php | grep "httpd entered RUNNING state"; then break; else sleep 1; fi done
 # Check connection on port 80
   - curl -sSLi http://localhost:8000/info.php | grep 'HTTP/1.1 200 OK'
